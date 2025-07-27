@@ -1,24 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+
+import Home           from './pages/Home';
+import Login          from './pages/Login';
+import Register       from './pages/Register';
+import Account        from './pages/Account';
+import Terms          from './pages/Terms';
+import Verify         from './pages/Verify';
+import VerifySent     from './pages/VerifySent';
+import Onboarding     from './pages/Onboarding';
+import NotFound       from './pages/NotFound';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
+import BodyClassController from './components/BodyClassController';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <BodyClassController />
+      <main className="content">
+        <Routes>
+          {/* Page d'accueil */}
+          
+          <Route path="/" element={<Home />} />
+
+          {/* Authentification */}
+          <Route path="/login"    element={<Login />} />
+          <Route path="/register" element={<Register />} />
+
+          {/* Compte protégé */}
+          <Route path="/account" element={<ProtectedRoute><Account /></ProtectedRoute>} />
+          <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
+
+          {/* Routes */}
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/verify" element={<Verify />} />
+          <Route path="/verify-sent" element={<VerifySent />} />
+
+          {/* Si l’URL ne matche rien d’autre, on redirige vers l’accueil */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
+
+    </>
   );
 }
 
